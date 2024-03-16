@@ -30,9 +30,10 @@ import { MatTableModule } from '@angular/material/table';
 import { ToastrModule } from 'ngx-toastr';
 import { EncountersModule } from './feature-modules/encounters/encounters.module';
 import { TourTouristModule } from './feature-modules/tour-tourist/tour-tourist.module';
+import { UpdateTourComponent } from './feature-modules/update-tour/update-tour.component';
 
 @NgModule({
-  declarations: [AppComponent, ConfirmationDialogComponent],
+  declarations: [AppComponent, ConfirmationDialogComponent, UpdateTourComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

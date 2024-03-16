@@ -63,6 +63,7 @@ import { UserLocationComponent } from '../auth/user-location/user-location.compo
 import { CheckoutPageComponent } from 'src/app/feature-modules/marketplace/checkout-page/checkout-page.component';
 import { TourExecutionLeaderboardsComponent } from 'src/app/feature-modules/tour-execution/tour-execution-leaderboards/tour-execution-leaderboards.component';
 import { TourOverviewPageComponent } from 'src/app/feature-modules/marketplace/tour-overview-page/tour-overview-page.component';
+import { UpdateTourComponent } from 'src/app/feature-modules/update-tour/update-tour.component';
 
 
 const routes: Routes = [
@@ -123,6 +124,7 @@ const routes: Routes = [
 
   { path: 'author/create-blog', component: BlogFormComponent, canActivate: [AuthorGuard] }, //.
   { path: 'author/create-new-tour', component: CreateTourComponent, canActivate: [AuthorGuard], }, //.
+  { path: 'author/update-tour/:id', component: UpdateTourComponent, canActivate: [AuthorGuard], }, //.
   { path: 'author/create-coupon', component: CreateCouponComponent, canActivate: [AuthorGuard] },
   { path: 'author/tour-checkpoints', component: TourCheckpointsDisplayComponent, canActivate: [AuthorGuard] }, //.
   { path: 'author/tours', component: AuthorToursDisplayComponent, canActivate: [AuthorGuard] }, //.
