@@ -140,7 +140,8 @@ export class CreateTourComponent implements OnInit {
   saveAndContinueLater(): void{
     
 
-    this.service.updateTour(this.submitForm()).subscribe({
+//    this.service.updateTour(this.submitForm()).subscribe({
+  this.service.addTour(this.submitForm()).subscribe({
       next : () => {
         this.router.navigate(['/author/tour-checkpoints'])
       }

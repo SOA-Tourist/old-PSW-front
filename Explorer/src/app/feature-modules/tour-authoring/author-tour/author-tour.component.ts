@@ -45,10 +45,10 @@ export class AuthorTourComponent {
   }
 
   private updateStatusFlags(): void {
-    if (this.tour.status === 0) {
+    if (this.tour.status.toString() == 'DRAFT') {
       this.isPublished = false;
       this.isArchived = false;
-    } else if (this.tour.status === 1) {
+    } else if (this.tour.status.toString() == 'PUBLISHED') {
       this.isPublished = true;
       this.isArchived = false;
     } else {
@@ -59,7 +59,7 @@ export class AuthorTourComponent {
 
 
 
-
+// SLEPCINA
   transformStatus(numberValue: number): string{
     if(numberValue === 0){
       return "Draft";
