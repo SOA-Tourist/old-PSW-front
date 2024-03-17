@@ -109,9 +109,11 @@ export class TourAuthoringService {
     );
   }
 
-  archiveTour(tourId: number): Observable<Tour> {
+  archiveTour(tourId: string): Observable<Tour> {
+    alert( environment.apiHost + 'tour/archiveTour' +tourId)
+
     return this.http.put<Tour>(
-      environment.apiHost + 'tour/archiveTour',
+      environment.apiHost + 'tour/archiveTour/' + tourId,
       tourId
     );
   }
