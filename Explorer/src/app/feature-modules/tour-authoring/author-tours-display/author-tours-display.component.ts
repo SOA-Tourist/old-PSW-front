@@ -120,7 +120,7 @@ export class AuthorToursDisplayComponent {
 
   editSelectedTour(tour : Tour){
     this.tourDataService.setTourId(tour.id)
-    this.router.navigate(['/author/create-new-tour'])
+    this.router.navigate(['/author/update-tour',tour.id])
   }
 
   addNewTour(){
