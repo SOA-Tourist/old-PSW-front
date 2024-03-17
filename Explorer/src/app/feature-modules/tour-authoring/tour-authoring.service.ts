@@ -52,6 +52,10 @@ export class TourAuthoringService {
     });
   }
 
+    getSingleTour(tourId: number): Observable<Tour> {
+      return this.http.get<Tour>(environment.apiHost + 'tour/singletour/' + tourId);
+  }
+
   getEquipmentForTour(
     tourId: number,
     page: number,
@@ -105,9 +109,11 @@ export class TourAuthoringService {
     );
   }
 
-  archiveTour(tourId: number): Observable<Tour> {
+  archiveTour(tourId: string): Observable<Tour> {
+    alert( environment.apiHost + 'tour/archiveTour' +tourId)
+
     return this.http.put<Tour>(
-      environment.apiHost + 'tour/archiveTour',
+      environment.apiHost + 'tour/archiveTour/' + tourId,
       tourId
     );
   }

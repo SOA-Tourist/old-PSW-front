@@ -119,8 +119,7 @@ export class AuthorToursDisplayComponent {
   }
 
   editSelectedTour(tour : Tour){
-    this.tourDataService.setTourId(tour.id)
-    this.router.navigate(['/author/create-new-tour'])
+    this.router.navigate(['/author/update-tour',tour.id])
   }
 
   addNewTour(){
@@ -129,10 +128,9 @@ export class AuthorToursDisplayComponent {
   }
 
   archiveSelectedTour(tour : Tour){
-    this.service.archiveTour(tour.id).subscribe({
+    this.service.archiveTour(tour.id.toString()).subscribe({
       next : () =>{
         this.toastr.success("Tour is succesfully archived")
-        //alert("Tour is seccesfully archived")
         this.reloadComponent();
       }
     })
