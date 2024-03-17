@@ -8,10 +8,9 @@ import { EncounterDrawService } from '../encounter-draw.service';
 @Component({
   selector: 'xp-encounter',
   templateUrl: './encounter.component.html',
-  styleUrls: ['./encounter.component.css']
+  styleUrls: ['./encounter.component.css'],
 })
 export class EncounterComponent implements OnInit {
- 
   socialEncounters: Encounter[];
   hiddenLocationEncounters: Encounter[];
   miscEncounters: Encounter[];
@@ -19,14 +18,13 @@ export class EncounterComponent implements OnInit {
   shouldRenderEncounterForm: boolean = false;
   shouldEdit: boolean = false;
   formEncounterType: number;
-  
 
   constructor(
     private service: EncounterService,
     private imageService: ImageService,
     private drawService: EncounterDrawService,
     private changeDetector: ChangeDetectorRef
-    ) {}
+  ) {}
 
   ngOnInit(): void {
     this.getAllEncounters();
@@ -35,9 +33,16 @@ export class EncounterComponent implements OnInit {
   getAllEncounters(): void {
     this.service.getAllEncounters().subscribe(
       (pagedResults: PagedResults<Encounter>) => {
-        this.socialEncounters = pagedResults.results.filter((e) => e.type === EncounterType.Social);
-        this.hiddenLocationEncounters = pagedResults.results.filter((e) => e.type === EncounterType.HiddenLocation);
-        this.miscEncounters = pagedResults.results.filter((e) => e.type === EncounterType.Misc);
+        this.socialEncounters = pagedResults.results.filter(
+          (e) => e.type.toString() === 'Social'
+        );
+        console.log(this.socialEncounters);
+        this.hiddenLocationEncounters = pagedResults.results.filter(
+          (e) => e.type === EncounterType.HiddenLocation
+        );
+        this.miscEncounters = pagedResults.results.filter(
+          (e) => e.type === EncounterType.Misc
+        );
       },
       (error) => {
         console.error('Error fetching encounters:', error);
@@ -46,10 +51,8 @@ export class EncounterComponent implements OnInit {
   }
 
   getFullImageUrl(imageURL?: string): string {
-    if(imageURL)
-      return this.imageService.getFullImageUrl(imageURL);
-    else
-      return "No Image";
+    if (imageURL) return this.imageService.getFullImageUrl(imageURL);
+    else return 'No Image';
   }
 
   deleteEncounter(id: number): void {
@@ -58,7 +61,7 @@ export class EncounterComponent implements OnInit {
         this.getAllEncounters();
         this.drawService.showEncounterDeleted();
       },
-    })
+    });
   }
 
   onEditClicked(encounter: Encounter): void {
@@ -83,12 +86,15 @@ export class EncounterComponent implements OnInit {
   }
 
   getStatusString(status: number): string {
-    switch(status) {
-      case 0: return "Active";
-      case 1: return "Draft";
-      case 2: return "Archived";
-      default: return "Error";
+    switch (status) {
+      case 0:
+        return 'Active';
+      case 1:
+        return 'Draft';
+      case 2:
+        return 'Archived';
+      default:
+        return 'Error';
     }
   }
-  
 }

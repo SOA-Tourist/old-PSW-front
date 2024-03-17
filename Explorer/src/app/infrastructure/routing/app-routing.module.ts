@@ -65,15 +65,17 @@ import { TourExecutionLeaderboardsComponent } from 'src/app/feature-modules/tour
 import { TourOverviewPageComponent } from 'src/app/feature-modules/marketplace/tour-overview-page/tour-overview-page.component';
 import { UpdateTourComponent } from 'src/app/feature-modules/update-tour/update-tour.component';
 
-
 const routes: Routes = [
-
   { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegistrationComponent },
   { path: 'add-checkpoint/:id', component: CheckpointAddComponent },
-  { path: 'tour-preferences', component: TourPreferencesComponent, canActivate: [TouristGuard] }, //.
+  {
+    path: 'tour-preferences',
+    component: TourPreferencesComponent,
+    canActivate: [TouristGuard],
+  }, //.
   { path: 'rate-tour', component: TourRatingComponent }, //.
   { path: 'manage-notes', component: TouristNotesComponent }, //.
   { path: 'club-overview/:id', component: TouristclubComponent },
@@ -88,66 +90,217 @@ const routes: Routes = [
   { path: 'tour-filter', component: TourFilterComponent }, //.
 
   // Admin
-  { path: 'admin/equipment', component: EquipmentComponent, canActivate: [AdminGuard], }, //.
-  { path: 'admin/manage-users', component: UmComponent, canActivate: [AdminGuard], }, //.
-  { path: 'admin/encounters-overview', component: EncounterComponent, canActivate: [AdminGuard] },
+  {
+    path: 'admin/equipment',
+    component: EquipmentComponent,
+    canActivate: [AdminGuard],
+  }, //.
+  {
+    path: 'admin/manage-users',
+    component: UmComponent,
+    canActivate: [AdminGuard],
+  }, //.
+  {
+    path: 'admin/encounters-overview',
+    component: EncounterComponent,
+    canActivate: [AdminGuard],
+  },
   // Auth
-  { path: 'join-club-request', component: RequestToJoinClubComponent, canActivate: [AuthGuard] }, //.
+  {
+    path: 'join-club-request',
+    component: RequestToJoinClubComponent,
+    canActivate: [AuthGuard],
+  }, //.
   { path: 'blog', component: BlogListComponent, canActivate: [AuthGuard] }, //.
   { path: 'blog/:id', component: BlogPageComponent, canActivate: [AuthGuard] },
-  { path: 'review-tour', component: ReviewTourComponent, canActivate: [AuthGuard] }, //.
-  { path: 'application-rate/create', component: ApplicationRateFormComponent, canActivate: [AuthGuard] }, //.
-  { path: 'application-rates', component: ApplicationRatesTableComponent, canActivate: [AuthGuard] }, //.
-  { path: 'single-tour-statistic/:id', component: SingleTourStatisticComponent, canActivate: [AuthGuard] },
-  { path: 'user-location', component: UserLocationComponent, canActivate: [AuthGuard] },
-  { path: 'tourist-leaderboards', component: TourExecutionLeaderboardsComponent, canActivate: [AuthGuard] },
+  {
+    path: 'review-tour',
+    component: ReviewTourComponent,
+    canActivate: [AuthGuard],
+  }, //.
+  {
+    path: 'application-rate/create',
+    component: ApplicationRateFormComponent,
+    canActivate: [AuthGuard],
+  }, //.
+  {
+    path: 'application-rates',
+    component: ApplicationRatesTableComponent,
+    canActivate: [AuthGuard],
+  }, //.
+  {
+    path: 'single-tour-statistic/:id',
+    component: SingleTourStatisticComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'user-location',
+    component: UserLocationComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'tourist-leaderboards',
+    component: TourExecutionLeaderboardsComponent,
+    canActivate: [AuthGuard],
+  },
   // Tourist
 
-  { path: 'profile', component: UserProfileComponent, canActivate: [TouristGuard] }, //.
-  { path: 'update-profile', component: UpdateUserProfileComponent, canActivate: [TouristGuard], }, //.
-  { path: 'position-simulator/:tourId', component: PositionSimulatorComponent, canActivate: [TouristGuard] }, //.
-  { path: 'position-simulator/:tourId/:isComposite', component: PositionSimulatorComponent, canActivate: [TouristGuard] }, //.
-  { path: 'tourist/tourist-equipment', component: TouristEquipmentComponent, canActivate: [TouristGuard] }, // 
-  { path: 'tourist/bundles', component: ToursBundlesTouristOverviewComponent, canActivate: [TouristGuard] }, // 
-  { path: 'tourist/create-campaign', component: CreateCampaignComponent, canActivate: [TouristGuard] }, //. 
-  { path: 'tourist/tourist-campaigns', component: TouristCampaignsComponent, canActivate: [TouristGuard] }, // 
-  { path: 'encounters-execution', component: EncountersExecutionComponent, canActivate: [TouristGuard] },
-  { path: 'tourist/create-tour', component: TourCreationComponent, canActivate: [TouristGuard] }, //.
+  {
+    path: 'profile',
+    component: UserProfileComponent,
+    canActivate: [TouristGuard],
+  }, //.
+  {
+    path: 'update-profile',
+    component: UpdateUserProfileComponent,
+    canActivate: [TouristGuard],
+  }, //.
+  {
+    path: 'position-simulator/:tourId',
+    component: PositionSimulatorComponent,
+    canActivate: [TouristGuard],
+  }, //.
+  {
+    path: 'position-simulator/:tourId/:isComposite',
+    component: PositionSimulatorComponent,
+    canActivate: [TouristGuard],
+  }, //.
+  {
+    path: 'tourist/tourist-equipment',
+    component: TouristEquipmentComponent,
+    canActivate: [TouristGuard],
+  }, //
+  {
+    path: 'tourist/bundles',
+    component: ToursBundlesTouristOverviewComponent,
+    canActivate: [TouristGuard],
+  }, //
+  {
+    path: 'tourist/create-campaign',
+    component: CreateCampaignComponent,
+    canActivate: [TouristGuard],
+  }, //.
+  {
+    path: 'tourist/tourist-campaigns',
+    component: TouristCampaignsComponent,
+    canActivate: [TouristGuard],
+  }, //
+  {
+    path: 'encounters-execution',
+    component: EncountersExecutionComponent,
+    canActivate: [TouristGuard],
+  },
+  {
+    path: 'tourist/create-tour',
+    component: TourCreationComponent,
+    canActivate: [TouristGuard],
+  }, //.
   { path: 'tour-overview/:tourId', component: TourOverviewPageComponent },
 
-  { path: 'tourist/club-requests-manager', component: ManageRequestToJoinClubComponent, canActivate: [TouristGuard] }, //.
-  { path: 'tourist/tours', component: ToursComponent, canActivate: [TouristGuard] }, //.
-  { path: 'checkout-page', component: CheckoutPageComponent, canActivate: [TouristGuard] }, //.
+  {
+    path: 'tourist/club-requests-manager',
+    component: ManageRequestToJoinClubComponent,
+    canActivate: [TouristGuard],
+  }, //.
+  {
+    path: 'tourist/tours',
+    component: ToursComponent,
+    canActivate: [TouristGuard],
+  }, //.
+  {
+    path: 'checkout-page',
+    component: CheckoutPageComponent,
+    canActivate: [TouristGuard],
+  }, //.
 
   // Author
-  { path: 'author/profile', component: AuthorProfileComponent, canActivate: [AuthorGuard] }, //.
+  {
+    path: 'author/profile',
+    component: AuthorProfileComponent,
+    canActivate: [AuthorGuard],
+  }, //.
 
-  { path: 'author/create-blog', component: BlogFormComponent, canActivate: [AuthorGuard] }, //.
-  { path: 'author/create-new-tour', component: CreateTourComponent, canActivate: [AuthorGuard], }, //.
-  { path: 'author/update-tour/:id', component: UpdateTourComponent, canActivate: [AuthorGuard], }, //.
-  { path: 'author/create-coupon', component: CreateCouponComponent, canActivate: [AuthorGuard] },
-  { path: 'author/tour-checkpoints', component: TourCheckpointsDisplayComponent, canActivate: [AuthorGuard] }, //.
-  { path: 'author/tours', component: AuthorToursDisplayComponent, canActivate: [AuthorGuard] }, //.
-  { path: 'author/tour-review', component: ReviewTourComponent, canActivate: [AuthorGuard], }, //.
-  { path: 'author/publish-tour', component: PublishTourComponent, canActivate: [AuthorGuard] }, //.
-  { path: 'author/bundles', component: TourBundlesOverviewComponent, canActivate: [AuthorGuard] }, //. 
-  { path: 'author/clubs-overview', component: OwnerViewClubsComponent, canActivate: [AuthorGuard] }, //.
+  {
+    path: 'author/create-blog',
+    component: BlogFormComponent,
+    canActivate: [AuthorGuard],
+  }, //.
+  {
+    path: 'author/create-new-tour',
+    component: CreateTourComponent,
+    canActivate: [AuthorGuard],
+  }, //.
+  { path: 'author/update-tour/:id', component: UpdateTourComponent }, //.
+  {
+    path: 'author/create-coupon',
+    component: CreateCouponComponent,
+    canActivate: [AuthorGuard],
+  },
+  {
+    path: 'author/tour-checkpoints',
+    component: TourCheckpointsDisplayComponent,
+    canActivate: [AuthorGuard],
+  }, //.
+  {
+    path: 'author/tours',
+    component: AuthorToursDisplayComponent,
+    canActivate: [AuthorGuard],
+  }, //.
+  {
+    path: 'author/tour-review',
+    component: ReviewTourComponent,
+    canActivate: [AuthorGuard],
+  }, //.
+  {
+    path: 'author/publish-tour',
+    component: PublishTourComponent,
+    canActivate: [AuthorGuard],
+  }, //.
+  {
+    path: 'author/bundles',
+    component: TourBundlesOverviewComponent,
+    canActivate: [AuthorGuard],
+  }, //.
+  {
+    path: 'author/clubs-overview',
+    component: OwnerViewClubsComponent,
+    canActivate: [AuthorGuard],
+  }, //.
 
-  { path: 'author/club-options/:clubId', component: OwnerClubOptionsComponent, canActivate: [AuthorGuard] }, //.
-  { path: 'author/issues', component: IssueReportsComponent, canActivate: [AuthorGuard] }, //.
-  { path: 'author/submit-report', component: ReportFormComponent, canActivate: [AuthorGuard] }, //.
-  { path: 'author/report/:id/comments', component: ReportCommentsComponent, canActivate: [AuthorGuard] }, //.
-  { path: 'author/destinations', component: DestinationComponent, canActivate: [AuthorGuard] }, //.
-  { path: 'author/tour-sale', component: TourSaleComponent, canActivate: [AuthorGuard] },
-
+  {
+    path: 'author/club-options/:clubId',
+    component: OwnerClubOptionsComponent,
+    canActivate: [AuthorGuard],
+  }, //.
+  {
+    path: 'author/issues',
+    component: IssueReportsComponent,
+    canActivate: [AuthorGuard],
+  }, //.
+  {
+    path: 'author/submit-report',
+    component: ReportFormComponent,
+    canActivate: [AuthorGuard],
+  }, //.
+  {
+    path: 'author/report/:id/comments',
+    component: ReportCommentsComponent,
+    canActivate: [AuthorGuard],
+  }, //.
+  {
+    path: 'author/destinations',
+    component: DestinationComponent,
+    canActivate: [AuthorGuard],
+  }, //.
+  {
+    path: 'author/tour-sale',
+    component: TourSaleComponent,
+    canActivate: [AuthorGuard],
+  },
 ];
-
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
-
-
-
+export class AppRoutingModule {}

@@ -1,4 +1,14 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild, } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { Encounter } from '../model/encounters.model';
 import { EncounterService } from '../encounter.service';
 import { MapComponent } from 'src/app/shared/map/map.component';
@@ -45,7 +55,7 @@ export class EncounterFormComponent implements OnChanges, AfterViewInit {
     private service: EncounterService,
     private imageService: ImageService,
     private drawService: EncounterDrawService
-  ) { }
+  ) {}
 
   ngAfterViewInit(): void {
     if (this.shouldEdit) {
@@ -56,7 +66,7 @@ export class EncounterFormComponent implements OnChanges, AfterViewInit {
     }
     this.setMapCenter();
   }
-  
+
   ngOnChanges(changes: SimpleChanges): void {
     this.encounterForm.reset();
     if (this.checkpoint) {
@@ -81,24 +91,26 @@ export class EncounterFormComponent implements OnChanges, AfterViewInit {
   }
 
   setMapCenter(): void {
-    if (this.shouldEdit){
-      this.mapComponent.setMapCenter(this.encounter.coordinates.latitude, this.encounter.coordinates.longitude);
-    }
-    else {
+    if (this.shouldEdit) {
+      this.mapComponent.setMapCenter(
+        this.encounter.coordinates.latitude,
+        this.encounter.coordinates.longitude
+      );
+    } else {
       this.mapComponent.setMapCenter();
     }
   }
 
   private setDefaultCheckpointEncounterValues(): void {
     this.encounterForm.get('longitude')?.setValue(this.checkpoint!.longitude);
-      this.encounterForm.get('latitude')?.setValue(this.checkpoint!.latitude);
-      this.encounterForm.get('range')?.setValue(50);
-      this.encounterForm.get('isRequired')?.setValue(false);
-      this.encounterForm.get('status')?.setValue(0);
-      this.encounterForm.get('longitude')?.disable();
-      this.encounterForm.get('latitude')?.disable();
-      this.encounterForm.get('range')?.disable();
-      this.encounterForm.get('status')?.disable();
+    this.encounterForm.get('latitude')?.setValue(this.checkpoint!.latitude);
+    this.encounterForm.get('range')?.setValue(50);
+    this.encounterForm.get('isRequired')?.setValue(false);
+    this.encounterForm.get('status')?.setValue(0);
+    this.encounterForm.get('longitude')?.disable();
+    this.encounterForm.get('latitude')?.disable();
+    this.encounterForm.get('range')?.disable();
+    this.encounterForm.get('status')?.disable();
   }
 
   submitEncounter(): void {
@@ -136,8 +148,10 @@ export class EncounterFormComponent implements OnChanges, AfterViewInit {
       xp: this.encounterForm.value.xp || 0,
       status: this.encounterForm.value.status ?? 0,
       range: this.encounterForm.value.range || 0,
-      miscEncounterTask: this.encounterForm.value.miscEncounterTask || undefined,
-      socialEncounterRequiredPeople: this.encounterForm.value.socialEncounterRequiredPeople || undefined
+      miscEncounterTask:
+        this.encounterForm.value.miscEncounterTask || undefined,
+      socialEncounterRequiredPeople:
+        this.encounterForm.value.socialEncounterRequiredPeople || undefined,
     };
 
     if (this.checkpoint) {
@@ -173,8 +187,10 @@ export class EncounterFormComponent implements OnChanges, AfterViewInit {
       xp: this.encounterForm.value.xp || 0,
       status: this.encounterForm.value.status ?? 0,
       range: this.encounterForm.value.range || 0,
-      miscEncounterTask: this.encounterForm.value.miscEncounterTask || undefined,
-      socialEncounterRequiredPeople: this.encounterForm.value.socialEncounterRequiredPeople || undefined,
+      miscEncounterTask:
+        this.encounterForm.value.miscEncounterTask || undefined,
+      socialEncounterRequiredPeople:
+        this.encounterForm.value.socialEncounterRequiredPeople || undefined,
     };
     this.service.updateEncounter(encounter).subscribe({
       next: () => {
