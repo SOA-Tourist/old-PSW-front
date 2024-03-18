@@ -38,10 +38,10 @@ export class EncounterComponent implements OnInit {
         );
         console.log(this.socialEncounters);
         this.hiddenLocationEncounters = pagedResults.results.filter(
-          (e) => e.type === EncounterType.HiddenLocation
+          (e) => e.type.toString() === 'HiddenLocation'
         );
         this.miscEncounters = pagedResults.results.filter(
-          (e) => e.type === EncounterType.Misc
+          (e) => e.type.toString() === 'Misc'
         );
       },
       (error) => {

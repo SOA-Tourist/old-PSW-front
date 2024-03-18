@@ -12,6 +12,7 @@ import { TextWrapper } from 'src/app/shared/model/text-wrapper.model';
 export class EncounterService {
   constructor(private http: HttpClient) {}
 
+  //Preveo
   getAllEncounters(): Observable<PagedResults<Encounter>> {
     return this.http.get<PagedResults<Encounter>>(
       environment.apiHost + 'administration/encounter'
@@ -38,18 +39,21 @@ export class EncounterService {
     );
   }
 
+  //Preveo
   getActiveEncounters(): Observable<PagedResults<Encounter>> {
     return this.http.get<PagedResults<Encounter>>(
       environment.apiHost + 'tourist/execution/encounter/allEncounters'
     );
   }
 
+  //Preveo
   deleteEncounter(id: number): Observable<Encounter> {
     return this.http.delete<Encounter>(
       environment.apiHost + 'administration/encounter/' + id
     );
   }
 
+  //Preveo
   addEncounter(encounter: Encounter): Observable<Encounter> {
     return this.http.post<Encounter>(
       environment.apiHost + 'administration/encounter',
@@ -57,6 +61,7 @@ export class EncounterService {
     );
   }
 
+  //Preveo
   updateEncounter(encounter: Encounter): Observable<Encounter> {
     return this.http.put<Encounter>(
       environment.apiHost + 'administration/encounter',
