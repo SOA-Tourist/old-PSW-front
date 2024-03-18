@@ -7,7 +7,10 @@ import { Observable, map } from 'rxjs';
 import { Checkpoint } from 'src/app/feature-modules/tour-authoring/model/checkpoint.model';
 import { TravelTimeAndMethod } from 'src/app/feature-modules/tour-authoring/model/travel-time-and-method.model';
 import { TransferValue } from 'src/app/feature-modules/tour-authoring/model/transfer-value.model';
-import { Encounter, EncounterType } from 'src/app/feature-modules/encounters/model/encounters.model';
+import {
+  Encounter,
+  EncounterType,
+} from 'src/app/feature-modules/encounters/model/encounters.model';
 
 @Component({
   selector: 'app-map',
@@ -15,7 +18,6 @@ import { Encounter, EncounterType } from 'src/app/feature-modules/encounters/mod
   styleUrls: ['./map.component.css'],
 })
 export class MapComponent implements AfterViewInit {
-
   @Output() changeDistance = new EventEmitter();
   @Output() changeTravelMethodAndTime = new EventEmitter();
   @Output() changeValue = new EventEmitter();
@@ -27,14 +29,13 @@ export class MapComponent implements AfterViewInit {
   private routeControl: any = null;
   private markers: L.Marker[] = [];
   private encounterRadiuses: L.Circle[] = [];
-  
 
-  distance : number = 0;
+  distance: number = 0;
 
   @Output() pinnedPlace = new EventEmitter<AddressTest>();
 
   constructor(private mapService: MapService) {}
-  
+
   ngAfterViewInit(): void {
     L.Marker.prototype.options.icon = this.generateIcon('blue');
     this.initMap();
@@ -89,13 +90,19 @@ export class MapComponent implements AfterViewInit {
       }
       this.mapService.reverseSearch(lat, lng).subscribe((res) => {
         console.log(res.display_name);
-        let addressTest: AddressTest = { lat: lat, lng: lng, address: res.display_name };
+        let addressTest: AddressTest = {
+          lat: lat,
+          lng: lng,
+          address: res.display_name,
+        };
         this.pinnedPlace.emit(addressTest);
       });
       console.log(
         'You clicked the map at latitude: ' + lat + ' and longitude: ' + lng
       );
-      this.currentMarker = new L.Marker([lat, lng], { icon: redIcon }).addTo(this.map);
+      this.currentMarker = new L.Marker([lat, lng], { icon: redIcon }).addTo(
+        this.map
+      );
     });
   }
 
@@ -112,20 +119,31 @@ export class MapComponent implements AfterViewInit {
       this.map.removeLayer(this.currentMarker);
       this.routePoints = [];
     }
-   
+
     for (let i = 0; i < checkpoints.length; i++) {
       this.routePoints.push(
-        new L.Routing.Waypoint(L.latLng(checkpoints[i].latitude, checkpoints[i].longitude), 'Checkpoint ' + (i + 1), {allowUTurn: true})
+        new L.Routing.Waypoint(
+          L.latLng(checkpoints[i].latitude, checkpoints[i].longitude),
+          'Checkpoint ' + (i + 1),
+          { allowUTurn: true }
+        )
       );
       this.markers.push(
-        new L.Marker([checkpoints[i].latitude, checkpoints[i].longitude], { icon: this.generateIcon('blue', i == 0) })
-        .bindPopup(`
+        new L.Marker([checkpoints[i].latitude, checkpoints[i].longitude], {
+          icon: this.generateIcon('blue', i == 0),
+        })
+          .bindPopup(
+            `
         <div style="text-align: center; font-size: 1.15em;">
           <h3 style="font-weight: bold;">${checkpoints[i].name}</h3>
           <p style="margin-bottom: 5px;">Reach the checkpoint to unlock the secret.</p>
-          <p style="margin-bottom: 5px;"><strong>Checkpoint num:</strong> ${i+1}</p>
+          <p style="margin-bottom: 5px;"><strong>Checkpoint num:</strong> ${
+            i + 1
+          }</p>
         </div>
-      `).addTo(this.map)
+      `
+          )
+          .addTo(this.map)
       );
     }
     return this.markers;
@@ -147,14 +165,21 @@ export class MapComponent implements AfterViewInit {
       shadowSize: [41, 41],
     });
     for (let i = 0; i < checkpoint.length; i++) {
-      
       this.routePoints.push(
-        new L.Routing.Waypoint(L.latLng(checkpoint[i].latitude, checkpoint[i].longitude), 'Checkpoint ' + (i + 1), {allowUTurn: true})
+        new L.Routing.Waypoint(
+          L.latLng(checkpoint[i].latitude, checkpoint[i].longitude),
+          'Checkpoint ' + (i + 1),
+          { allowUTurn: true }
+        )
       );
       this.markers.push(
-        new L.Marker([checkpoint[i].latitude, checkpoint[i].longitude], { icon: redIcon })
-        .bindPopup(`<h3 style="font-weight: bold;">${checkpoint[i].name}</h3>`)
-        .addTo(this.map)
+        new L.Marker([checkpoint[i].latitude, checkpoint[i].longitude], {
+          icon: redIcon,
+        })
+          .bindPopup(
+            `<h3 style="font-weight: bold;">${checkpoint[i].name}</h3>`
+          )
+          .addTo(this.map)
       );
     }
   }
@@ -183,7 +208,7 @@ export class MapComponent implements AfterViewInit {
 
   changeMarkerColorToGray(marker: any): void {
     const grayIcon = new L.Icon({
-      iconUrl: 'https://www.clker.com/cliparts/i/4/d/6/s/P/map-pin-gray-md.png', 
+      iconUrl: 'https://www.clker.com/cliparts/i/4/d/6/s/P/map-pin-gray-md.png',
       iconSize: [25, 41],
       iconAnchor: [12, 41],
       popupAnchor: [1, -34],
@@ -192,7 +217,7 @@ export class MapComponent implements AfterViewInit {
     marker.setIcon(grayIcon);
   }
 
-  bindMarkerPopup(marker: any, popupHtml: string){
+  bindMarkerPopup(marker: any, popupHtml: string) {
     this.changeMarkerColorToGray(marker);
     marker.unbindPopup();
     marker.bindPopup(popupHtml);
@@ -204,15 +229,15 @@ export class MapComponent implements AfterViewInit {
     }
     this.distance = 0;
 
-    if(this.routeControl){
+    if (this.routeControl) {
       this.map.removeLayer(this.routeControl);
       this.routeControl = null;
     }
     this.currentMarker = L.marker([lat, lng]).addTo(this.map);
   }
-  
+
   setRoute(): void {
-    if (this.routeControl){
+    if (this.routeControl) {
       this.map.removeControl(this.routeControl);
       this.routeControl = null;
     }
@@ -223,34 +248,37 @@ export class MapComponent implements AfterViewInit {
         'pk.eyJ1Ijoic2xvYmljYSIsImEiOiJjbG8wMm9tbmEwYnhtMmpxdXJzd2R4b2Q1In0.Ezp5HpNKNot63hzulKkRzw',
         { profile: 'mapbox/walking' }
       ),
-      plan: L.Routing.plan(
-        this.routePoints,
-        {
-          createMarker: this.shouldCreateMarkers,
-        }
-      ),
+      plan: L.Routing.plan(this.routePoints, {
+        createMarker: this.shouldCreateMarkers,
+      }),
       addWaypoints: false,
       lineOptions: {
-        styles: [{ color: '#039dfc', opacity: 1, weight: 4.5, lineCap: 'round' }],
+        styles: [
+          { color: '#039dfc', opacity: 1, weight: 4.5, lineCap: 'round' },
+        ],
         extendToWaypoints: false,
-        missingRouteTolerance: 0.2
+        missingRouteTolerance: 0.2,
       },
     }).addTo(this.map);
 
-    this.routeControl.on('routesfound', (e : any) => {
+    this.routeControl.on('routesfound', (e: any) => {
       var routes = e.routes;
       var summary = routes[0].summary;
       var totalDistance = summary.totalDistance / 1000;
       var totalTime = Math.round(summary.totalTime / 60);
       this.distance = totalDistance;
-      
+
       routesFound = true;
-      
-      this.chngeValue({distance : totalDistance ,travelMethod : 0, travelTime : totalTime});
+
+      this.chngeValue({
+        distance: totalDistance,
+        travelMethod: 0,
+        travelTime: totalTime,
+      });
     });
 
-    if(!routesFound){
-      this.chngeValue({distance : 0 ,travelMethod : 0, travelTime : -1});
+    if (!routesFound) {
+      this.chngeValue({ distance: 0, travelMethod: 0, travelTime: -1 });
     }
   }
 
@@ -263,32 +291,36 @@ export class MapComponent implements AfterViewInit {
         'pk.eyJ1Ijoic2xvYmljYSIsImEiOiJjbG8wMm9tbmEwYnhtMmpxdXJzd2R4b2Q1In0.Ezp5HpNKNot63hzulKkRzw',
         { profile: 'mapbox/walking' }
       ),
-      plan: L.Routing.plan(
-        waypoints,
-      {
+      plan: L.Routing.plan(waypoints, {
         createMarker: this.shouldCreateMarkers,
-      }
-      ),
+      }),
       addWaypoints: false,
     }).addTo(this.map);
 
-    routeControl.on('routesfound', (e : any) => {
+    routeControl.on('routesfound', (e: any) => {
       this.map.removeControl(routeControl);
       var routes = e.routes;
       var summary = routes[0].summary;
       var coveredDistance = summary.totalDistance / 1000;
-      this.chngeValue({distance : coveredDistance, travelMethod : 0, travelTime : -1});      
+      this.chngeValue({
+        distance: coveredDistance,
+        travelMethod: 0,
+        travelTime: -1,
+      });
     });
   }
 
-  private chngeValue(value : TransferValue){
+  private chngeValue(value: TransferValue) {
     this.changeValue.emit(value);
-  } 
-
-  private shouldCreateMarkers(i: number, waypoint: L.Routing.Waypoint, n: number): boolean {
-    return false;
   }
 
+  private shouldCreateMarkers(
+    i: number,
+    waypoint: L.Routing.Waypoint,
+    n: number
+  ): boolean {
+    return false;
+  }
 
   removeRoute(): void {
     this.map.removeControl(this.routeControl);
@@ -296,30 +328,40 @@ export class MapComponent implements AfterViewInit {
   }
 
   drawEncounters(encounters: Encounter[], popups: Map<number, string>): any[] {
-    this.markers.forEach(marker => {
+    console.log(encounters.length);
+    this.markers.forEach((marker) => {
       this.map.removeLayer(marker);
     });
     this.markers = [];
-
-    this.encounterRadiuses.forEach(circle => {
+    this.encounterRadiuses.forEach((circle) => {
       this.map.removeLayer(circle);
     });
     this.encounterRadiuses = [];
-    
     for (let i = 0; i < encounters.length; i++) {
       let popUp = popups.get(encounters[i].id!);
       this.markers.push(
-        new L.Marker([encounters[i].coordinates.latitude, encounters[i].coordinates.longitude], { icon: this.generateCorespondingIcon(encounters[i]) })
-        .bindPopup(popUp!)
-        .addTo(this.map)
+        new L.Marker(
+          [
+            encounters[i].coordinates.latitude,
+            encounters[i].coordinates.longitude,
+          ],
+          { icon: this.generateCorespondingIcon(encounters[i]) }
+        )
+          .bindPopup(popUp!)
+          .addTo(this.map)
       );
-
-      let circle = L.circle([encounters[i].coordinates.latitude, encounters[i].coordinates.longitude], {
-        //color: 'black',
-        radius: encounters[i].range
-      });
+      let circle = L.circle(
+        [
+          encounters[i].coordinates.latitude,
+          encounters[i].coordinates.longitude,
+        ],
+        {
+          //color: 'black',
+          radius: encounters[i].range,
+        }
+      );
       this.encounterRadiuses.push(circle);
-  
+
       // Add the circle to the map
       circle.addTo(this.map);
     }
@@ -327,14 +369,24 @@ export class MapComponent implements AfterViewInit {
   }
 
   private generateCorespondingIcon(encounter: Encounter): L.Icon {
-    switch (encounter.type) {
-      case EncounterType.Social:
-        return this.generateIcon('green');
-      case EncounterType.HiddenLocation:
-        return this.generateIcon('orange');
-      case EncounterType.Misc:
-        return this.generateIcon('yellow');
+    if (encounter.type.toString() === 'Social') {
+      console.log('zeleno');
+      return this.generateIcon('green');
+    } else if (encounter.type.toString() === 'HiddenLocation') {
+      console.log('nara');
+      return this.generateIcon('orange');
+    } else {
+      console.log('zuto');
+      return this.generateIcon('yellow');
     }
+    // switch (encounter.type) {
+    //   case EncounterType.Social:
+    //     return this.generateIcon('green');
+    //   case EncounterType.HiddenLocation:
+    //     return this.generateIcon('orange');
+    //   case EncounterType.Misc:
+    //     return this.generateIcon('yellow');
+    // }
   }
 
   increaseMarkerSize(marker: L.Marker): void {
