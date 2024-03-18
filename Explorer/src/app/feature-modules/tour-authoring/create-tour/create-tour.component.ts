@@ -148,7 +148,6 @@ export class CreateTourComponent implements OnInit {
 
   goToNextPage() {
     this.service.addTour(this.submitForm()).subscribe((createdTour) => {  
-      alert(createdTour.id);
       this.router.navigate(['/author/tour-checkpoints/'+createdTour.id])
     });
   }

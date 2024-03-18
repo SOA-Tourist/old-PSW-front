@@ -42,18 +42,21 @@ export class CheckpointAddComponent implements OnInit {
     private router: Router,
     private tourDataService : TourDataService,
     private encounterService: EncounterService,
-  ) {
-    this.tourId = tourDataService.getTourId();
-  }
+  ) {}
 
   ngOnInit(): void {
     this.clickedAddress = '';
+    this.route.queryParams.subscribe(params => {
+      let id = params['id'];
+    });
 
 
     if(!isNaN(this.tourId) && this.tourId !=0){
+      
       this.getCheckpoints(this.tourId);
     }
     else{
+      alert("Tour id is not valid");
       this.router.navigate(['/author/tour-checkpoints']);
     }
   }
