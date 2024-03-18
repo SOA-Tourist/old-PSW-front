@@ -63,6 +63,7 @@ export class EncountersExecutionComponent implements AfterViewInit, OnDestroy {
   ) {}
 
   ngOnDestroy(): void {
+    alert("1")
     if (this.encounterActive) {
       this.abandonEncounter();
     }
@@ -146,6 +147,7 @@ export class EncountersExecutionComponent implements AfterViewInit, OnDestroy {
   }
 
   abandonEncounter(): void {
+    alert("2")
     this.executionService.abandon(this.encounterExecution.id).subscribe({
       next: (result) => {
         this.encounterExecution = result;
@@ -160,7 +162,8 @@ export class EncountersExecutionComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-  activateEncounter(encounterId: number): void {
+  activateEncounter(encounterId: any): void {
+    alert("3")
     if (this.encounterActive) {
       this.toastr.error(
         'You must finish your active encounter before starting another one.',
@@ -202,6 +205,7 @@ export class EncountersExecutionComponent implements AfterViewInit, OnDestroy {
   }
 
   trackProgress(): void {
+    alert("4")
     const intervalMs = 5000;
 
     if (this.encounterActive) {
@@ -221,6 +225,7 @@ export class EncountersExecutionComponent implements AfterViewInit, OnDestroy {
   }
 
   updateProgress(): Observable<any> {
+    alert("5")
     if (this.encounterActive && this.currentPosition) {
       return this.executionService.checkIfCompleted(
         this.encounterExecution.id,
@@ -247,6 +252,7 @@ export class EncountersExecutionComponent implements AfterViewInit, OnDestroy {
   }
 
   checkEncounterStatus(result: any): void {
+    alert("6")
     this.encounterExecution = result;
     if (result.status.toString() === 'Abandoned') {
       this.encounterActive = false;
@@ -259,6 +265,8 @@ export class EncountersExecutionComponent implements AfterViewInit, OnDestroy {
   }
 
   finishMiscEncounter(): void {
+    console.log("KURCINA")
+    alert("7")
     this.executionService
       .completeMiscEncounter(this.encounterExecution.id)
       .subscribe({
