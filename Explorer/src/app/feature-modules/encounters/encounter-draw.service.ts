@@ -16,17 +16,28 @@ export class EncounterDrawService {
 
   generateEncounterPopUp(encounter: Encounter, encounterStats: EncounterStatistics): string {
     let specifics = '';
-    switch (encounter.type) {
-      case EncounterType.Social:
-        specifics = this.generateSocialEncounterSpecifics(encounter);
-        break;
-      case EncounterType.HiddenLocation:
-        specifics = this.generateHiddenLocationEncounterSpecifics(encounter);
-        break;
-      case EncounterType.Misc:
-        specifics = this.generateMiscEncounterSpecifics(encounter);
-        break;
+    console.log(encounter);
+    if (encounter.type.toString() === 'Social') {
+      console.log(encounter);
+      specifics = this.generateSocialEncounterSpecifics(encounter);
+    } else if (encounter.type.toString() === 'HiddenLocation') {
+      console.log('nara');
+      specifics = this.generateHiddenLocationEncounterSpecifics(encounter);
+    } else {
+      console.log('zuto');
+      specifics = this.generateHiddenLocationEncounterSpecifics(encounter);
     }
+    // switch (encounter.type) {
+    //   case EncounterType.Social:
+    //     specifics = this.generateSocialEncounterSpecifics(encounter);
+    //     break;
+    //   case EncounterType.HiddenLocation:
+    //     specifics = this.generateHiddenLocationEncounterSpecifics(encounter);
+    //     break;
+    //   case EncounterType.Misc:
+    //     specifics = this.generateMiscEncounterSpecifics(encounter);
+    //     break;
+    // }
     return this.generateCommonEncounterHTML(encounter, encounterStats) + specifics + this.generateEncounterButton(encounter.id!);
   }
 
@@ -55,9 +66,14 @@ export class EncounterDrawService {
     return `<div style="text-align: center; font-size: 1.15em;"><strong>Task:</strong> ${encounter.miscEncounterTask}</div><br>`;
   }
   
-  generateEncounterButton(encounterId: number): string {
+  activateEncounter(encounterId: number): void{
+    alert("micasigurica")
+  }
+
+  generateEncounterButton(encounterId: any): string {
+    alert(encounterId)
     return `<div style="display: flex; justify-content: center;">
-              <button onclick="activateEncounter(${encounterId})" style="background-color: #315149; border: none; border-radius: 20px; padding: 10px 20px; font-size: 1.2em; color: white; transition: all 0.3s ease 0s; cursor: pointer; outline: none;">
+              <button onclick="activateEncounter('${encounterId}')" style="background-color: #315149; border: none; border-radius: 20px; padding: 10px 20px; font-size: 1.2em; color: white; transition: all 0.3s ease 0s; cursor: pointer; outline: none;">
                 Activate Encounter
               </button>
             </div>`;

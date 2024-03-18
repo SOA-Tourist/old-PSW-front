@@ -17,20 +17,22 @@
     </div>
 
     <app-map (pinnedPlace)="onPinPlaced($event)" (activatedEncounterId)="activateEncounter($event)"></app-map>
-
+    <button (click)="activateEncounter('nesto1')" style="background-color: #315149; border: none; border-radius: 20px; padding: 10px 20px; font-size: 1.2em; color: white; transition: all 0.3s ease 0s; cursor: pointer; outline: none;">
+        Activate Encounter
+      </button>
     <div *ngIf="encounterActive" class="active-encounter-info">
         <h2>Active Encounter</h2>
         <h3>{{ encounter.name }}</h3>
         <p>{{ encounter.description }}</p>
-        <div *ngIf="encounter.type === 1">
+        <div *ngIf="encounter.type.toString() === 'HiddenLocation'">
             <p title="Find the location from which the image has been captured.">Type: Hidden Location</p>
             <img [src]="getFullImageUrl(encounter.imageUrl)" alt="Encounter image">
         </div>
-        <div *ngIf="encounter.type === 0">
+        <div *ngIf="encounter.type.toString() === 'Social'">
             <p title="The required amount of people have to be inside the encounter range">Type: Social</p>
             <p>Required people: {{encounter.socialEncounterRequiredPeople}}</p>
         </div>
-        <div *ngIf="encounter.type === 2">
+        <div *ngIf="encounter.type.toString() === 'Misc'">
             <p title="Complete the given task">Type: Misc</p>
             <p>Task: {{encounter.miscEncounterTask}}</p>
             <button *ngIf="encounterActive" mat-raised-button type="submit" color="primary" 

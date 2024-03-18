@@ -415,6 +415,7 @@ export class MapComponent implements AfterViewInit {
   }
 
   activateEncounter(encounterId: number): void {
+    alert("jasnamasna")
     this.activatedEncounterId.emit(encounterId);
   }
 }

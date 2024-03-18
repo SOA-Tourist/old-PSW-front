@@ -25,18 +25,14 @@ export class TourCheckpointsDisplayComponent {
      private route : ActivatedRoute,
      private checkpointService : CheckpointService,
      private tourDataService : TourDataService,
-     ){
-      this.tourId = tourDataService.getTourId(); 
-     };
+     ){};
 
-  ngOnInit(): void{
-    
-    if(!isNaN(this.tourId) && this.tourId != 0){
-      this.getCheckpoints(this.tourId);
-    }
-    else{
-      this.router.navigate(['/author/tours'])
-    }
+     ngOnInit() {
+      this.route.params.subscribe(params => {
+          let tourId = params['id']; // 'id' is the name of the route parameter
+         alert(tourId); // This should log the tourId
+          // rest of your code...
+      });
   }
 
   getCheckpoints(id: number): void {
