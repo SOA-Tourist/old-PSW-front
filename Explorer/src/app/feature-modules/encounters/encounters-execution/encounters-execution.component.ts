@@ -161,6 +161,7 @@ export class EncountersExecutionComponent implements AfterViewInit, OnDestroy {
   }
 
   activateEncounter(encounterId: number): void {
+    alert('tu sam');
     if (this.encounterActive) {
       this.toastr.error(
         'You must finish your active encounter before starting another one.',
