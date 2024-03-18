@@ -29,14 +29,13 @@ export class TourCheckpointsDisplayComponent {
       this.tourId = tourDataService.getTourId(); 
      };
 
-  ngOnInit(): void{
-    
-    if(!isNaN(this.tourId) && this.tourId != 0){
-      this.getCheckpoints(this.tourId);
-    }
-    else{
-      this.router.navigate(['/author/tours'])
-    }
+     ngOnInit() {
+
+      this.route.queryParams.subscribe(params => {
+          let id = params['id'];
+          alert(id)
+          // Do something with tourId
+      });
   }
 
   getCheckpoints(id: number): void {

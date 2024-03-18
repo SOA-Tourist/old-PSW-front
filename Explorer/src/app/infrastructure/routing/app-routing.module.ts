@@ -237,7 +237,7 @@ const routes: Routes = [
     canActivate: [AuthorGuard],
   },
   {
-    path: 'author/tour-checkpoints',
+    path: 'author/tour-checkpoints/:tourId',
     component: TourCheckpointsDisplayComponent,
     canActivate: [AuthorGuard],
   }, //.

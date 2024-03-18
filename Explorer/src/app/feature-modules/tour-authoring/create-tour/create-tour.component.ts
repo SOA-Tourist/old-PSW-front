@@ -33,7 +33,7 @@ export class CreateTourComponent implements OnInit {
 
   tourId : number;
   tour : Tour;
-
+  global : any;
    
   isFormFull : boolean = false;
 
@@ -116,6 +116,7 @@ export class CreateTourComponent implements OnInit {
       }
     }
     else{
+      
       tour = {
         id: 0,
         authorId : this.user?.id,
@@ -138,28 +139,23 @@ export class CreateTourComponent implements OnInit {
   }
 
   saveAndContinueLater(): void{
-    
-
-//    this.service.updateTour(this.submitForm()).subscribe({
-  this.service.addTour(this.submitForm()).subscribe({
+   this.service.addTour(this.submitForm()).subscribe({
       next : () => {
         this.router.navigate(['/author/tour-checkpoints'])
       }
     })
   }
 
+  goToNextPage() {
+    this.service.addTour(this.submitForm()).subscribe((createdTour) => {  
+      alert(createdTour.id);
+      this.router.navigate(['/author/tour-checkpoints/'+createdTour.id])
+    });
+  }
 
-
-  goToNextPage(){
-
-    this.service.updateTour(this.submitForm()).subscribe((addedTour : Tour) => {
-      this.tourDataService.setTourId(addedTour.id);
-
-      this.router.navigate(['/author/tour-checkpoints'])
-    })
-
+  //)}
     
 
      
-  }
 }
+
