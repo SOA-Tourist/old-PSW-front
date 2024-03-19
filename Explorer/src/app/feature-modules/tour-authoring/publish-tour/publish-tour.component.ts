@@ -53,7 +53,7 @@ export class PublishTourComponent {
 
   }
 
-  publish(){
+publish(){
     var isOk = true;
     if(!this.tour.name){
       isOk = false;
