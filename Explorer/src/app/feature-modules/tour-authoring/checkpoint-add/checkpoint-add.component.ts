@@ -34,6 +34,7 @@ export class CheckpointAddComponent implements OnInit {
   distance: number;
   showEncounterForm: boolean = false;
   paramId : any;
+  oldLatLng: { lat: number, lng: number };
   
 
   constructor(
@@ -130,14 +131,7 @@ export class CheckpointAddComponent implements OnInit {
         
         this.getCheckpoints(this.paramId);
         this.resetForm();
-        // this.tourService.getTourById(this.tourId).subscribe({
-        //   next: (result) => {
-            
-        //   }
-        // })
 
-        // this.tourDataService.setTourId(this.tourId)
-        // this.router.navigate(['/checkpointsdisplay'])
       },
     });
   }
@@ -160,11 +154,14 @@ export class CheckpointAddComponent implements OnInit {
       name: this.checkpointForm.value.name || '',
       description: this.checkpointForm.value.description || '',
       pictureURL: this.checkpointForm.value.pictureURL || '',
-      latitude: this.clickedLatLng.lat,
-      longitude: this.clickedLatLng.lng,
-      tourId: this.paramId,
-      publicRequest: this.selectedCheckpoint?.PublicRequest || '',
+      latitude: (this.clickedLatLng && this.clickedLatLng.lat !== 0) ? this.clickedLatLng.lat : this.oldLatLng.lat,
+      longitude: (this.clickedLatLng && this.clickedLatLng.lng !== 0) ? this.clickedLatLng.lng : this.oldLatLng.lng,
+      tourId: this.paramId
     };
+
+    this.mapComponent.removeRoute();
+    this.mapComponent.deleteMarkers();
+    this.mapComponent.addMarker(this.clickedLatLng.lat, this.clickedLatLng.lng);
     this.checkpointService.editCheckpoint(newCheckpoint).subscribe({
       next: () => {
         this.getCheckpoints(this.paramId);
@@ -189,6 +186,10 @@ export class CheckpointAddComponent implements OnInit {
         this.clickedAddress = displayName;
       });
     this.selectedCheckpoint = checkpoint;
+    this.oldLatLng = {
+      lat: this.selectedCheckpoint.latitude,
+      lng: this.selectedCheckpoint.longitude
+    };
   }
 
   changeTourDistanceAndTime(transferObject : TransferValue){
