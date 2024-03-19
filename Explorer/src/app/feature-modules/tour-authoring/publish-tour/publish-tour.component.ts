@@ -4,6 +4,7 @@ import { TourDataService } from '../tourData.service';
 import { TourAuthoringService } from '../tour-authoring.service';
 import { Tour } from '../model/tour.model';
 import { CheckpointService } from '../checkpoint.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'xp-publish-tour',
@@ -21,6 +22,7 @@ export class PublishTourComponent {
     private tourDataService : TourDataService,
     private service : TourAuthoringService,
     private checkpointService: CheckpointService,
+    private toastr: ToastrService,
   ){}
 
   ngOnInit(): void{
@@ -47,19 +49,15 @@ publish(){
   console.log(this.tour);
     var isOk = true;
     if(!this.tour.name){
-      alert("Tour name is required");
       isOk = false;
     }
     if(!this.tour.description){
-      alert("Tour description is required");
       isOk = false;
     }
     if(this.tour.checkpoints.length < 2){
-      alert("Tour must have at least 2 checkpoints");
       isOk = false;
     }
     if(!this.tour.tags){
-      alert("Tour tags are required");
       isOk = false;
     }
 
@@ -67,13 +65,13 @@ publish(){
     if(isOk){
       this.service.publishTour(this.paramId).subscribe({
         next : () =>{
-          alert("Tour published successfully");
+          this.toastr.success("Tour published successfully");
           this.router.navigate(['/author/tours'])
         }
       })
     }
     else{
-      alert("Error. The tour was not created correctly, please try again ");
+      this.toastr.error("Error. The tour was not created correctly, please try again ");
     }
 
   }
