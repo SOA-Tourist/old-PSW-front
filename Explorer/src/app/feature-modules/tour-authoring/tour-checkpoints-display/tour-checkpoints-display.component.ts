@@ -29,9 +29,9 @@ export class TourCheckpointsDisplayComponent {
 
      ngOnInit() {
       this.route.params.subscribe(params => {
-          let tourId = params['id']; // 'id' is the name of the route parameter
-         alert(tourId); // This should log the tourId
-          // rest of your code...
+          let tourId = params['id'];
+          this.tourId = tourId;
+          
       });
   }
 
