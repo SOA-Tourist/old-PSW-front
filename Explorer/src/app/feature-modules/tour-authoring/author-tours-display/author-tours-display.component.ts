@@ -14,6 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { TourBundleDialogComponent } from '../tour-bundle-dialog/tour-bundle-dialog.component';
 import { TourStatus } from '../model/tour-status';
 import { ToastrService } from 'ngx-toastr';
+import { CheckpointService } from '../checkpoint.service';
 
 @Component({
   selector: 'xp-author-tours-display',
@@ -30,6 +31,7 @@ export class AuthorToursDisplayComponent {
     private location : Location,
     private dialog: MatDialog,
     private toastr: ToastrService,
+    private checkpointService: CheckpointService,
     ){};
 
   equipment: Equipment [] = []; 
@@ -137,13 +139,23 @@ export class AuthorToursDisplayComponent {
   }
 
   publishSelectedTour(tour : Tour){
-    this.service.publishTour(tour.id.toString()).subscribe({
-      next : () =>{
-        this.toastr.success("Tour is seccesfully published")
-        //alert("Tour is seccesfully published");
-        this.reloadComponent();
+    this.checkpointService.getAllToursCheckpoints(tour.id.toString(),0,0).subscribe({
+      next : (checkpoints) =>{
+        tour.checkpoints = checkpoints.results;
+        if(tour.checkpoints.length < 2){
+          this.toastr.error("Tour must have at least 2 checkpoints")
+          return;}
+        else{
+          this.service.publishTour(tour.id.toString()).subscribe({
+            next : () =>{
+              this.toastr.success("Tour is seccesfully published");
+              this.reloadComponent();
+            }
+          })
+        }
       }
     })
+
   }
 
   addSelected(event : Tour) : void{
