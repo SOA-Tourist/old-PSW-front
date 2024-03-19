@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/env/environment';
 import { Observable } from 'rxjs';
@@ -19,6 +19,10 @@ export class CheckpointService {
 
   getCheckpoints(id : number) : Observable<PagedResults<Checkpoint>> {
     return this.http.get<PagedResults<Checkpoint>>('https://localhost:44333/api/tour/getCheckpoints/' + id);
+  }
+
+  getAllToursCheckpoints(tourId: number, page: number, pageSize: number): Observable<PagedResults<Checkpoint>> {
+    return this.http.get<PagedResults<Checkpoint>> (`https://localhost:44333/api/tour/toursCheckpoints?tourId=${tourId}&page=${page}&pageSize=${pageSize}`);
   }
 
   getCompositeTourCheckpoints(compositeTourId : number) : Observable<PagedResults<Checkpoint>> {

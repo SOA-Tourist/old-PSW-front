@@ -31,12 +31,13 @@ export class TourCheckpointsDisplayComponent {
       this.route.params.subscribe(params => {
           let tourId = params['id'];
           this.tourId = tourId;
-          
+          alert(this.tourId)
+          this.getCheckpoints(tourId);
       });
   }
 
   getCheckpoints(id: number): void {
-    this.checkpointService.getCheckpoints(id).subscribe({
+    this.checkpointService.getAllToursCheckpoints(id,0,0).subscribe({
       next: (result: PagedResults<Checkpoint>) => {
         this.tourCheckpoints = result.results;
 
