@@ -21,7 +21,7 @@ export class CheckpointService {
     return this.http.get<PagedResults<Checkpoint>>('https://localhost:44333/api/tour/getCheckpoints/' + id);
   }
 
-  getAllToursCheckpoints(tourId: number, page: number, pageSize: number): Observable<PagedResults<Checkpoint>> {
+  getAllToursCheckpoints(tourId: string, page: number, pageSize: number): Observable<PagedResults<Checkpoint>> {
     return this.http.get<PagedResults<Checkpoint>> (`https://localhost:44333/api/tour/toursCheckpoints?tourId=${tourId}&page=${page}&pageSize=${pageSize}`);
   }
 

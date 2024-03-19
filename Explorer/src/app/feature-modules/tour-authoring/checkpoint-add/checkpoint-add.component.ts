@@ -33,8 +33,7 @@ export class CheckpointAddComponent implements OnInit {
   showed: boolean = false;
   distance: number;
   showEncounterForm: boolean = false;
-  takenId : string;
-
+  paramId : any;
   
 
   constructor(
@@ -42,7 +41,6 @@ export class CheckpointAddComponent implements OnInit {
     private tourService: TourAuthoringService,
     private route: ActivatedRoute,
     private router: Router,
-    private tourDataService : TourDataService,
     private encounterService: EncounterService,
   ) {}
 
@@ -50,7 +48,8 @@ export class CheckpointAddComponent implements OnInit {
     this.clickedAddress = '';
     this.route.params.subscribe(params => {
       let tourId = params['id'];
-      this.takenId = tourId;
+      this.paramId = tourId;
+      this.getCheckpoints(this.paramId);
   });
 
   }
@@ -76,17 +75,17 @@ export class CheckpointAddComponent implements OnInit {
     }
   }
 
-  getCheckpoints(id: number): void {
-    this.checkpointService.getCheckpoints(id).subscribe({
+  getCheckpoints(id: string): void {
+    this.checkpointService.getAllToursCheckpoints(id,0,0).subscribe({
       next: (result: PagedResults<Checkpoint>) => {
 
-        for(let i=0; i<result.results.length; i++){
-          this.encounterService.getForCheckpoint(result.results[i].id!).subscribe({
-            next(enc: any){
-              result.results[i].encounterId = enc.id;
-            }
-          })
-        }
+        // for(let i=0; i<result.results.length; i++){
+        //   this.encounterService.getForCheckpoint(result.results[i].id!).subscribe({
+        //     next(enc: any){
+        //       result.results[i].encounterId = enc.id;
+        //     }
+        //   })
+        // }
         this.addedCheckpoints = result.results;
         
         this.drawCheckpoints();
@@ -123,19 +122,19 @@ export class CheckpointAddComponent implements OnInit {
       pictureURL: this.checkpointForm.value.pictureURL || '',
       latitude: this.clickedLatLng.lat,
       longitude: this.clickedLatLng.lng,
-      tourId: this.takenId,
+      tourId: this.paramId,
       PublicRequest: newRequest
     };
     this.checkpointService.addCheckpoint(newCheckpoint).subscribe({
       next: () => {
         
-        this.getCheckpoints(this.tourId);
+        this.getCheckpoints(this.paramId);
         this.resetForm();
-        this.tourService.getTourById(this.tourId).subscribe({
-          next: (result) => {
+        // this.tourService.getTourById(this.tourId).subscribe({
+        //   next: (result) => {
             
-          }
-        })
+        //   }
+        // })
 
         // this.tourDataService.setTourId(this.tourId)
         // this.router.navigate(['/checkpointsdisplay'])
@@ -149,29 +148,26 @@ export class CheckpointAddComponent implements OnInit {
     this.checkpointService.deleteCheckpoint(id).subscribe({
       next: () => {
         this.mapComponent.deleteMarkers();
-        this.getCheckpoints(this.tourId);
-        
-        
+        this.getCheckpoints(this.paramId);
       }
     });
   }
 
   editCheckpoint(): void {
 
-    
-    const newCheckpoint: Checkpoint = {
+    const newCheckpoint: any = {
       id: this.selectedCheckpoint?.id,
       name: this.checkpointForm.value.name || '',
       description: this.checkpointForm.value.description || '',
       pictureURL: this.checkpointForm.value.pictureURL || '',
       latitude: this.clickedLatLng.lat,
       longitude: this.clickedLatLng.lng,
-      tourId: this.takenId//this.selectedCheckpoint?.tourId,
+      tourId: this.paramId,//this.selectedCheckpoint?.tourId,
+      publicRequest: this.selectedCheckpoint?.PublicRequest || '',
     };
-    print()
     this.checkpointService.editCheckpoint(newCheckpoint).subscribe({
       next: () => {
-        this.getCheckpoints(this.tourId);
+        this.getCheckpoints(this.paramId);
         this.resetForm();
       },
     });
@@ -196,7 +192,7 @@ export class CheckpointAddComponent implements OnInit {
   }
 
   changeTourDistanceAndTime(transferObject : TransferValue){
-    this.tourService.getTourById(this.tourId).subscribe({
+    this.tourService.getSingleTour(this.paramId).subscribe({
       next: (result) =>{
         var tour = result;
 
@@ -214,8 +210,7 @@ export class CheckpointAddComponent implements OnInit {
   }
 
   goBack(){
-    this.tourDataService.setTourId(this.tourId);
-    this.router.navigate(['/author/tour-checkpoints'])
+    this.router.navigate(['/author/tour-checkpoints/'+this.paramId]);
   }
 
   // updateTour(){

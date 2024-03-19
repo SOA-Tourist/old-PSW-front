@@ -16,7 +16,7 @@ export class TourCheckpointsDisplayComponent {
   
 
   tourCheckpoints : Checkpoint[] = [];
-  tourId : number;
+  tourId : string;
   isCheckpointsArrayEmpty : boolean = false;
   isNextButtonEnabled : boolean = false;
 
@@ -31,12 +31,11 @@ export class TourCheckpointsDisplayComponent {
       this.route.params.subscribe(params => {
           let tourId = params['id'];
           this.tourId = tourId;
-          alert(this.tourId)
           this.getCheckpoints(tourId);
       });
   }
 
-  getCheckpoints(id: number): void {
+  getCheckpoints(id: string): void {
     this.checkpointService.getAllToursCheckpoints(id,0,0).subscribe({
       next: (result: PagedResults<Checkpoint>) => {
         this.tourCheckpoints = result.results;
@@ -77,7 +76,6 @@ export class TourCheckpointsDisplayComponent {
   }
 
   goToNextPage(){
-    this.tourDataService.setTourId(this.tourId)
     this.router.navigate(['/author/publish-tour']) 
   }
 

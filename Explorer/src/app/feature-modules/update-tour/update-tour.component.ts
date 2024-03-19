@@ -41,9 +41,12 @@ convertDifficultToNumber(difficult: string): number | undefined {
   return undefined;
 }
 
+  paramId : any;
+
   ngOnInit() :void{
     this.route.params.subscribe(params => {
       let id = params['id'];
+      this.paramId = id;
 
       this.service.getSingleTour(id).subscribe((result) => {
         var alltags = result.tags.split(',');
@@ -83,6 +86,10 @@ convertDifficultToNumber(difficult: string): number | undefined {
       this.toastr.success('Tour updated');
       this.router.navigate(['/author/tours']);
     });
+  }
+
+  editCheckpoints() :void{
+    this.router.navigate(['author/tour-checkpoints/'+this.paramId]);
   }
 
 

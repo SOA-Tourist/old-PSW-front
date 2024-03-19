@@ -1,6 +1,7 @@
 <div class="main-container">
     <div class="second-container">
         <app-map (pinnedPlace)="onPinPlaced($event)" (changeValue) = "changeTourDistanceAndTime($event)"></app-map>
+                
         <!-- <button mat-raised-button color="primary" (click)="showFullRoute()"
             class="add-checkpoint-button"><mat-icon>show</mat-icon></button> -->
         <div class="right-pannel">
@@ -44,8 +45,8 @@
 
                 
 
-                <!-- <button mat-raised-button type="submit" color="primary" (click)="editCheckpoint()"
-                    class="submit-form-button">Edit</button> -->
+                 <button mat-raised-button type="submit" color="primary" (click)="editCheckpoint()"
+                    class="submit-form-button">Edit</button>
             </form>
 
             
@@ -58,8 +59,9 @@
 
                     </div>
                     <div class="right">
-                        <!-- <button color="primary" (click)="editForm(checkpoint)"
-                            mat-icon-button><mat-icon>edit</mat-icon></button> -->
+
+                        <button color="primary" (click)="editForm(checkpoint)" mat-icon-button><mat-icon>edit</mat-icon></button> 
+
                         <button class="add-encounter-button" *ngIf="!checkpoint.encounterId" (click)="addEncounterOnCheckpoint(checkpoint)">Add encounter</button>
                         <button (click)="deleteCheckpoint(checkpoint.id!)" mat-icon-button>
                             <mat-icon>delete</mat-icon></button>
