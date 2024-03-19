@@ -33,7 +33,7 @@ export class CheckpointAddComponent implements OnInit {
   showed: boolean = false;
   distance: number;
   showEncounterForm: boolean = false;
-  idBajo : string;
+  takenId : string;
 
   
 
@@ -49,8 +49,8 @@ export class CheckpointAddComponent implements OnInit {
   ngOnInit() {
     this.clickedAddress = '';
     this.route.params.subscribe(params => {
-      let tourId = params['id']; // 'id' is the name of the route parameter
-      this.idBajo = tourId;
+      let tourId = params['id'];
+      this.takenId = tourId;
   });
 
   }
@@ -123,7 +123,7 @@ export class CheckpointAddComponent implements OnInit {
       pictureURL: this.checkpointForm.value.pictureURL || '',
       latitude: this.clickedLatLng.lat,
       longitude: this.clickedLatLng.lng,
-      tourId: this.idBajo,
+      tourId: this.takenId,
       PublicRequest: newRequest
     };
     this.checkpointService.addCheckpoint(newCheckpoint).subscribe({
@@ -166,7 +166,7 @@ export class CheckpointAddComponent implements OnInit {
       pictureURL: this.checkpointForm.value.pictureURL || '',
       latitude: this.clickedLatLng.lat,
       longitude: this.clickedLatLng.lng,
-      tourId: this.idBajo//this.selectedCheckpoint?.tourId,
+      tourId: this.takenId//this.selectedCheckpoint?.tourId,
     };
     print()
     this.checkpointService.editCheckpoint(newCheckpoint).subscribe({
