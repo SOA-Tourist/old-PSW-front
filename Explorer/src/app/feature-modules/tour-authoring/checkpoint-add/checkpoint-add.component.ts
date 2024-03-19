@@ -162,7 +162,7 @@ export class CheckpointAddComponent implements OnInit {
       pictureURL: this.checkpointForm.value.pictureURL || '',
       latitude: this.clickedLatLng.lat,
       longitude: this.clickedLatLng.lng,
-      tourId: this.paramId,//this.selectedCheckpoint?.tourId,
+      tourId: this.paramId,
       publicRequest: this.selectedCheckpoint?.PublicRequest || '',
     };
     this.checkpointService.editCheckpoint(newCheckpoint).subscribe({

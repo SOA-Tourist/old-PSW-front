@@ -12,7 +12,7 @@ import { CheckpointService } from '../checkpoint.service';
 })
 export class PublishTourComponent {
 
-  tourId: number;
+  paramId: any;
   tour: Tour;
 
   constructor(
@@ -21,29 +21,33 @@ export class PublishTourComponent {
     private tourDataService : TourDataService,
     private service : TourAuthoringService,
     private checkpointService: CheckpointService,
-  ){
-    this.tourId = tourDataService.getTourId();
-  };
+  ){}
 
   ngOnInit(): void{
 
-    if(!isNaN(this.tourId) && this.tourId != 0){
-      this.service.getTourById(this.tourId).subscribe({
-        next: (result) =>{
-          this.tour = result;
-          this.checkpointService.getCheckpoints(this.tourId).subscribe({
-            next : (checkpoints) =>{
-              this.tour.checkpoints = checkpoints.results;
-            }
-          })
-
-        }
-      })
+    this.route.params.subscribe(params => {
+      let tourId = params['id'];
+      this.paramId = tourId;
       
-    }
-    else{
-      this.router.navigate(['/author/tours'])
-    }
+  });
+
+    // if(!isNaN(this.tourId) && this.tourId != 0){
+    //   this.service.getTourById(this.tourId).subscribe({
+    //     next: (result) =>{
+    //       this.tour = result;
+    //       this.checkpointService.getCheckpoints(this.tourId).subscribe({
+    //         next : (checkpoints) =>{
+    //           this.tour.checkpoints = checkpoints.results;
+    //         }
+    //       })
+
+    //     }
+    //   })
+      
+    // }
+    // else{
+    //   this.router.navigate(['/author/tours'])
+    // }
 
     
 
@@ -68,7 +72,7 @@ export class PublishTourComponent {
     }
 
     if(isOk){
-      this.service.publishTour(this.tourId).subscribe({
+      this.service.publishTour(this.paramId).subscribe({
         next : () =>{
           this.router.navigate(['/author/tours'])
         }

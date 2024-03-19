@@ -252,7 +252,7 @@ const routes: Routes = [
     canActivate: [AuthorGuard],
   }, //.
   {
-    path: 'author/publish-tour',
+    path: 'author/publish-tour/:id',
     component: PublishTourComponent,
     canActivate: [AuthorGuard],
   }, //.

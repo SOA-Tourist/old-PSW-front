@@ -16,7 +16,7 @@ export class TourCheckpointsDisplayComponent {
   
 
   tourCheckpoints : Checkpoint[] = [];
-  tourId : string;
+  tourId : any;
   isCheckpointsArrayEmpty : boolean = false;
   isNextButtonEnabled : boolean = false;
 
@@ -76,7 +76,7 @@ export class TourCheckpointsDisplayComponent {
   }
 
   goToNextPage(){
-    this.router.navigate(['/author/publish-tour']) 
+    this.router.navigate(['/author/publish-tour/'+this.tourId]) // PROVERITI, DELUJE SVE OK
   }
 
   saveForLater(){
