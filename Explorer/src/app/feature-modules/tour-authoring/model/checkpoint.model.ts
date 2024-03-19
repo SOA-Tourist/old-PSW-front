@@ -5,7 +5,7 @@ export interface Checkpoint{
     pictureURL : string,
     latitude : number,
     longitude : number,
-    tourId? : number,
+    tourId? : string,
     encounterId? : number,
     PublicRequest?: CheckpointRequest, 
 }

@@ -13,7 +13,7 @@ export class CheckpointService {
   constructor(private http: HttpClient) { }
 
 
-  addCheckpoint(tourId : number, checkpoint : Checkpoint): Observable<void> {
+  addCheckpoint(checkpoint : Checkpoint): Observable<void> {
     return this.http.post<void>('https://localhost:44333/api/tour/addCheckpoint/', checkpoint);
   }
 
