@@ -102,9 +102,9 @@ export class TourAuthoringService {
     );
   }
 
-  publishTour(tourId: number): Observable<Tour> {
+  publishTour(tourId: string): Observable<Tour> {
     return this.http.put<Tour>(
-      environment.apiHost + 'tour/publishTour',
+      environment.apiHost + 'tour/publishTour/'+tourId,
       tourId
     );
   }

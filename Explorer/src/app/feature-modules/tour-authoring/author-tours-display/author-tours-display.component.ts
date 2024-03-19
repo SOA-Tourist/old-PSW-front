@@ -137,7 +137,7 @@ export class AuthorToursDisplayComponent {
   }
 
   publishSelectedTour(tour : Tour){
-    this.service.publishTour(tour.id).subscribe({
+    this.service.publishTour(tour.id.toString()).subscribe({
       next : () =>{
         this.toastr.success("Tour is seccesfully published")
         //alert("Tour is seccesfully published");

@@ -28,52 +28,46 @@ export class PublishTourComponent {
     this.route.params.subscribe(params => {
       let tourId = params['id'];
       this.paramId = tourId;
-      
+      this.service.getSingleTour(this.paramId).subscribe({
+        next: (result) =>{
+          this.tour = result;
+          this.checkpointService.getAllToursCheckpoints(this.paramId,0,0).subscribe({
+            next : (checkpoints) =>{
+              this.tour.checkpoints = checkpoints.results;
+            }
+          })
+        }
   });
-
-    // if(!isNaN(this.tourId) && this.tourId != 0){
-    //   this.service.getTourById(this.tourId).subscribe({
-    //     next: (result) =>{
-    //       this.tour = result;
-    //       this.checkpointService.getCheckpoints(this.tourId).subscribe({
-    //         next : (checkpoints) =>{
-    //           this.tour.checkpoints = checkpoints.results;
-    //         }
-    //       })
-
-    //     }
-    //   })
-      
-    // }
-    // else{
-    //   this.router.navigate(['/author/tours'])
-    // }
-
-    
+})
+     
 
   }
 
 publish(){
+  console.log(this.tour);
     var isOk = true;
     if(!this.tour.name){
+      alert("Tour name is required");
       isOk = false;
     }
     if(!this.tour.description){
+      alert("Tour description is required");
       isOk = false;
     }
     if(this.tour.checkpoints.length < 2){
+      alert("Tour must have at least 2 checkpoints");
       isOk = false;
     }
     if(!this.tour.tags){
+      alert("Tour tags are required");
       isOk = false;
     }
-    if(this.tour.travelTimeAndMethod.length === 0){
-      isOk = false;
-    }
+
 
     if(isOk){
       this.service.publishTour(this.paramId).subscribe({
         next : () =>{
+          alert("Tour published successfully");
           this.router.navigate(['/author/tours'])
         }
       })
