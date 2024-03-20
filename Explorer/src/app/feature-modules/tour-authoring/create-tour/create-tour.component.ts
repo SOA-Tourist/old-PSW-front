@@ -8,7 +8,7 @@ import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { Equipment } from '../../administration/model/equipment.model';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { TourDataService } from '../tourData.service';
-
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -24,7 +24,8 @@ export class CreateTourComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
-    private tourDataService: TourDataService
+    private tourDataService: TourDataService,
+    private toastr: ToastrService
     ){
       this.tourId = tourDataService.getTourId();
     };
@@ -141,15 +142,20 @@ export class CreateTourComponent implements OnInit {
   saveAndContinueLater(): void{
    this.service.addTour(this.submitForm()).subscribe({
       next : () => {
-        this.router.navigate(['/author/tour-checkpoints'])
+        this.router.navigate(['/author/tours'])
       }
     })
   }
 
   goToNextPage() {
-    this.service.addTour(this.submitForm()).subscribe((createdTour) => {  
-      this.router.navigate(['/author/tour-checkpoints/'+createdTour.id])
-    });
+    this.service.addTour(this.submitForm()).subscribe(
+      (createdTour) => {  
+        this.router.navigate(['/author/tour-checkpoints/'+createdTour.id]);
+      },
+      (error) => {
+        this.toastr.error('There was an error while creating the tour.');
+      }
+    );
   }
 
   //)}
