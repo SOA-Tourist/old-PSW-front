@@ -175,7 +175,6 @@ export class EncountersExecutionComponent implements AfterViewInit, OnDestroy {
       );
       return;
     }
-    alert('ovde');
     this.executionService
       .activate(encounterId, this.currentPosition)
       .subscribe({
