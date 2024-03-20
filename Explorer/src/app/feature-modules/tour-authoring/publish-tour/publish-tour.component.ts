@@ -4,6 +4,7 @@ import { TourDataService } from '../tourData.service';
 import { TourAuthoringService } from '../tour-authoring.service';
 import { Tour } from '../model/tour.model';
 import { CheckpointService } from '../checkpoint.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'xp-publish-tour',
@@ -12,7 +13,7 @@ import { CheckpointService } from '../checkpoint.service';
 })
 export class PublishTourComponent {
 
-  tourId: number;
+  paramId: any;
   tour: Tour;
 
   constructor(
@@ -21,35 +22,31 @@ export class PublishTourComponent {
     private tourDataService : TourDataService,
     private service : TourAuthoringService,
     private checkpointService: CheckpointService,
-  ){
-    this.tourId = tourDataService.getTourId();
-  };
+    private toastr: ToastrService,
+  ){}
 
   ngOnInit(): void{
 
-    if(!isNaN(this.tourId) && this.tourId != 0){
-      this.service.getTourById(this.tourId).subscribe({
+    this.route.params.subscribe(params => {
+      let tourId = params['id'];
+      this.paramId = tourId;
+      this.service.getSingleTour(this.paramId).subscribe({
         next: (result) =>{
           this.tour = result;
-          this.checkpointService.getCheckpoints(this.tourId).subscribe({
+          this.checkpointService.getAllToursCheckpoints(this.paramId,0,0).subscribe({
             next : (checkpoints) =>{
               this.tour.checkpoints = checkpoints.results;
             }
           })
-
         }
-      })
-      
-    }
-    else{
-      this.router.navigate(['/author/tours'])
-    }
-
-    
+  });
+})
+     
 
   }
 
-  publish(){
+publish(){
+  console.log(this.tour);
     var isOk = true;
     if(!this.tour.name){
       isOk = false;
@@ -63,19 +60,18 @@ export class PublishTourComponent {
     if(!this.tour.tags){
       isOk = false;
     }
-    if(this.tour.travelTimeAndMethod.length === 0){
-      isOk = false;
-    }
+
 
     if(isOk){
-      this.service.publishTour(this.tourId).subscribe({
+      this.service.publishTour(this.paramId).subscribe({
         next : () =>{
+          this.toastr.success("Tour published successfully");
           this.router.navigate(['/author/tours'])
         }
       })
     }
     else{
-      alert("Error. The tour was not created correctly, please try again ");
+      this.toastr.error("Error. The tour was not created correctly, please try again ");
     }
 
   }
